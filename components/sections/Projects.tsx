@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ExternalLink, Play, CheckCircle } from 'lucide-react';
+import { Play, CheckCircle } from 'lucide-react';
 import { projects } from '@/lib/data';
 import { useState } from 'react';
 

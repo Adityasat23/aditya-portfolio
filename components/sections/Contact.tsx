@@ -55,10 +55,10 @@ export default function Contact() {
           style={{ textAlign: 'center', marginBottom: '4rem' }}
         >
           <h2 className="gradient-text" style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>
-            Let's Collaborate
+            Let&apos;s Collaborate
           </h2>
           <p style={{ color: '#9ca3af', maxWidth: '42rem', margin: '0 auto' }}>
-            Have a project in mind? Let's create something amazing together
+            Have a project in mind? Let&apos;s create something amazing together
           </p>
         </motion.div>
 

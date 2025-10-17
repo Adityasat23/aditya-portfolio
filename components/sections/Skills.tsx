@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Video, Palette, BarChart3, Lightbulb, Briefcase } from 'lucide-react';
 import { skills } from '@/lib/data';
 
-const categoryIcons: { [key: string]: any } = {
+const categoryIcons: Record<string, React.ComponentType<{ size?: number; style?: React.CSSProperties }>> = {
   "Video Production & Post-Production": Video,
   "Creative Design": Palette,
   "Analytics & Performance Tracking": BarChart3,

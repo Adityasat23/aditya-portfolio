@@ -41,17 +41,17 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1.5rem' }}>
-              Hi, I'm <span className="gradient-text">Aditya Satria Pratama</span>
+              Hi, I&apos;m <span className="gradient-text">Aditya Satria Pratama</span>
             </h3>
             <div style={{ color: '#d1d5db', lineHeight: '1.75', marginBottom: '2rem' }}>
               <p style={{ marginBottom: '1rem' }}>
-                I'm a <strong style={{ color: 'white' }}>Video Content Specialist</strong> with a proven track record of creating high-impact content for influencers and viral campaigns. I combine creative production expertise with performance analytics to deliver content that drives measurable business results.
+                I&apos;m a <strong style={{ color: 'white' }}>Video Content Specialist</strong> with a proven track record of creating high-impact content for influencers and viral campaigns. I combine creative production expertise with performance analytics to deliver content that drives measurable business results.
               </p>
               <p style={{ marginBottom: '1rem' }}>
                 My journey in digital content creation spans from working with <strong style={{ color: 'white' }}>major brands like Google Indonesia, BCA, Mandiri, and Binance</strong>, to managing social media strategies for organizations serving thousands of students.
               </p>
               <p>
-                I believe in the philosophy: <em style={{ color: '#4A90E2' }}>"Where Creativity Meets Critical Thinking"</em> — every creative decision I make is backed by data and strategic thinking.
+                I believe in the philosophy: <em style={{ color: '#4A90E2' }}>&quot;Where Creativity Meets Critical Thinking&quot;</em> — every creative decision I make is backed by data and strategic thinking.
               </p>
             </div>
 
