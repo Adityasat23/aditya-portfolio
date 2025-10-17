@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@theme {
+  /* Color Palette */
+  --color-primary: #4A90E2;
+  --color-primary-dark: #3A7BC8;
+  --color-secondary: #7B68EE;
+  --color-secondary-dark: #6B58DE;
+  --color-dark-bg: #0A0E27;
+  --color-dark-card: #151B3B;
+  --color-dark-lighter: #1F2747;
+  --color-accent: #FF6B35;
+  
+  /* Font Family */
+  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  * {
+    border-color: rgb(55 65 81);
+  }
+  
+  body {
+    background-color: var(--color-dark-bg);
+    color: white;
+    font-family: var(--font-family-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .section-container {
+    max-width: 72rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5rem 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .section-container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .card-gradient {
+    background: linear-gradient(to bottom right, var(--color-dark-card), var(--color-dark-lighter));
+  }
+
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+
+  .bg-secondary {
+    background-color: var(--color-secondary);
+  }
+
+  .bg-dark-bg {
+    background-color: var(--color-dark-bg);
+  }
+
+  .bg-dark-card {
+    background-color: var(--color-dark-card);
+  }
+
+  .bg-dark-lighter {
+    background-color: var(--color-dark-lighter);
+  }
+
+  .text-primary {
+    color: var(--color-primary);
+  }
+
+  .text-secondary {
+    color: var(--color-secondary);
+  }
+
+  .border-primary {
+    border-color: var(--color-primary);
+  }
+
+  .hover\:bg-primary:hover {
+    background-color: var(--color-primary);
+  }
+
+  .hover\:text-primary:hover {
+    color: var(--color-primary);
+  }
+
+  .from-primary {
+    --tw-gradient-from: var(--color-primary);
+  }
+
+  .to-secondary {
+    --tw-gradient-to: var(--color-secondary);
+  }
+}
