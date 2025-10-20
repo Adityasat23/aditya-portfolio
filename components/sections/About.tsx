@@ -116,7 +116,7 @@ export default function About() {
               }}
             >
               <h4 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '1rem', color: 'white' }}>
-                Let's Connect
+                Lets Connect
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 <a 

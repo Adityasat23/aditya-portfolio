@@ -74,7 +74,7 @@ export default function Contact() {
               Get In Touch
             </h3>
             <p style={{ color: '#d1d5db', marginBottom: '2rem', lineHeight: '1.75' }}>
-              I'm always interested in hearing about new projects and opportunities. 
+              I am always interested in hearing about new projects and opportunities. 
               Whether you need content creation, video editing, or social media strategy, 
               feel free to reach out!
             </p>
