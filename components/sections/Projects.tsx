@@ -95,6 +95,21 @@ export default function Projects() {
                   background: 'linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(123, 104, 238, 0.2))',
                   overflow: 'hidden'
                 }}>
+                  {/* Project Image */}
+                  {project.image && (
+                    <img 
+                      src={project.image}
+                      alt={project.title}
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  )}
+                  
                   {/* Featured Badge */}
                   {project.featured && (
                     <div style={{
@@ -114,17 +129,24 @@ export default function Projects() {
                     </div>
                   )}
 
-                  {/* Play Button Overlay */}
+                  {/* Play Button Overlay for Videos */}
                   {project.videoEmbed && (
-                    <div style={{
-                      position: 'absolute',
-                      inset: 0,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                      backdropFilter: 'blur(4px)'
-                    }}>
+                    <a
+                      href={`https://youtube.com/watch?v=${project.videoEmbed}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                        backdropFilter: 'blur(4px)',
+                        transition: 'all 0.3s',
+                        textDecoration: 'none'
+                      }}
+                    >
                       <motion.div
                         whileHover={{ scale: 1.1 }}
                         style={{
@@ -135,12 +157,13 @@ export default function Projects() {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          cursor: 'pointer'
+                          cursor: 'pointer',
+                          boxShadow: '0 10px 30px rgba(74, 144, 226, 0.4)'
                         }}
                       >
-                        <Play size={24} style={{ color: 'white' }} />
+                        <Play size={24} style={{ color: 'white', marginLeft: '0.25rem' }} />
                       </motion.div>
-                    </div>
+                    </a>
                   )}
 
                   {/* Category Badge */}

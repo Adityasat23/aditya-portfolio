@@ -127,7 +127,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right Content - Profile Stats */}
+          {/* Right Content - Profile Image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -145,16 +145,28 @@ export default function Hero() {
               border: '1px solid rgba(74, 144, 226, 0.3)',
               overflow: 'hidden',
             }}>
-              {/* Placeholder for profile image */}
-              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{
-                  width: '16rem',
-                  height: '16rem',
-                  borderRadius: '9999px',
-                  background: 'linear-gradient(to bottom right, #4A90E2, #7B68EE)',
-                  opacity: 0.2,
-                }}></div>
-              </div>
+              {/* Profile Image */}
+              {personalInfo.profileImage && (
+                <img 
+                  src={personalInfo.profileImage}
+                  alt="Aditya Satria Pratama"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                  }}
+                />
+              )}
+              
+              {/* Gradient Overlay */}
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to top, rgba(10, 14, 39, 0.9) 0%, transparent 50%)',
+              }}></div>
               
               {/* Stats Overlay */}
               <div style={{

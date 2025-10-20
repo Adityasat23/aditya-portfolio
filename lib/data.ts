@@ -11,7 +11,8 @@ export const personalInfo = {
     behance: "https://behance.net/aditysat",
     linkedin: "https://linkedin.com/in/aditysat",
   },
-  showreel: "YOUR_YOUTUBE_VIDEO_ID", // GANTI dengan ID video YouTube Anda
+  profileImage: "/images/profile.jpg", // ADD THIS
+  showreel: "dQw4w9WgXcQ", // GANTI dengan YouTube ID Anda yang real
   resumeUrl: "/resume.pdf",
 };
 
