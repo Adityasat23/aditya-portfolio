@@ -1,0 +1,14 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Crawl-delay
+Crawl-delay: 0
+
+# Sitemap location
+Sitemap: https://aditya-portfolio-orcin.vercel.app/sitemap.xml
+
+# Disallow admin pages (if any in future)
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/

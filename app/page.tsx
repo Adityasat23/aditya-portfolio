@@ -1,5 +1,6 @@
 import Navigation from '@/components/Navigation';
 import ScrollProgress from '@/components/ScrollProgress';
+import BackToTop from '@/components/BackToTop';
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
 import Experience from '@/components/sections/Experience';
@@ -18,6 +19,7 @@ export default function Home() {
       <Projects />
       <Skills />
       <Contact />
+      <BackToTop />
     </main>
   );
 }

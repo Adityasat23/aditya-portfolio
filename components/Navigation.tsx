@@ -20,9 +20,22 @@ export default function Navigation() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
+    
+    // Close mobile menu on scroll
+    const handleScrollClose = () => {
+      if (isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('scroll', handleScrollClose);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScrollClose);
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <motion.nav
@@ -138,7 +151,7 @@ export default function Navigation() {
                 }}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Let's Collaborate
+                Let&apos;s Collaborate
               </a>
             </div>
           </motion.div>
