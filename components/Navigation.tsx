@@ -37,6 +37,30 @@ export default function Navigation() {
     };
   }, [isMobileMenuOpen]);
 
+  // FIXED: Proper smooth scroll handler for iOS
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+    
+    const targetId = href.replace('#', '');
+    const targetElement = document.getElementById(targetId);
+    
+    if (targetElement) {
+      const navHeight = 64; // Height of fixed navigation
+      const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+      
+      // Update URL hash without jumping
+      if (window.history.pushState) {
+        window.history.pushState(null, '', href);
+      }
+    }
+  };
+
   return (
     <motion.nav
       initial={{ y: -100 }}
