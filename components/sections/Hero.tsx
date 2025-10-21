@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { ArrowDown, Play } from 'lucide-react';
 import { personalInfo } from '@/lib/data';
+import TypeWriter from '@/components/ui/TypeWriter';
 
 export default function Hero() {
   return (
