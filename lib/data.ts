@@ -1,3 +1,21 @@
+// Type Definitions
+export interface Project {
+  id: number;
+  title: string;
+  client: string;
+  category: string;
+  year: string;
+  description: string;
+  challenge: string;
+  solution: string;
+  results: string[];
+  image: string;
+  videoEmbed?: string;
+  videoPlatform?: 'youtube' | 'instagram' | 'tiktok';
+  tags: string[];
+  featured: boolean;
+}
+
 export const personalInfo = {
   name: "Aditya Satria Pratama",
   title: "Digital Content Specialist",
@@ -11,8 +29,8 @@ export const personalInfo = {
     behance: "https://behance.net/aditysat",
     linkedin: "https://linkedin.com/in/aditysat",
   },
-  profileImage: "/images/profile.jpg", // ADD THIS
-  showreel: "dQw4w9WgXcQ", // GANTI dengan YouTube ID Anda yang real
+  profileImage: "/images/profile.jpg",
+  showreel: "dQw4w9WgXcQ", // GANTI dengan YouTube ID real
   resumeUrl: "/resume.pdf",
 };
 
@@ -24,17 +42,16 @@ export const experiences = [
     type: "Part/Full Time",
     period: "2025 - Present",
     location: "Work From Anywhere",
-    description: "Joined a dynamic digital agency providing seamless branding and marketing solutions. Scaling stagnant Instagram accounts to drive measurable business growth and managing diverse content needs for 5+ clients.",
+    description: "Scaling stagnant Instagram accounts to drive measurable business growth and managing diverse content needs for 5+ clients.",
     achievements: [
       "Generated 393K+ views across managed accounts",
       "Achieved 348% increase in link clicks",
       "Drove 427% growth in profile visits within one year",
       "Successfully managing 5+ client accounts simultaneously",
-      "Promoted from intern to specialist within 4 months",
-      "Currently mentoring junior interns on content strategy"
+      "Promoted from intern to specialist within 4 months"
     ],
-    tags: ["Content Strategy", "Google Analytics", "Team Management", "Motion Graphics"],
-    color: "#4A90E2"
+    tags: ["Content Strategy", "Google Analytics", "Team Management"],
+    color: "#0A84FF"
   },
   {
     id: 2,
@@ -43,16 +60,14 @@ export const experiences = [
     type: "Part Time",
     period: "2024 - Present",
     location: "Remote",
-    description: "Working with Indonesia's leading KOL & Influencer management agency, partnering with 80+ major brands including BCA, Mandiri, and Binance. Collective audience reach exceeding 18+ million followers.",
+    description: "Working with Indonesia's leading KOL & Influencer management agency, partnering with 80+ major brands.",
     achievements: [
-      "Delivered 21.7M+ views on Google Indonesia x Gracia Caroline campaign",
-      "Maintained 100% compliance with Google's strict multinational brand guidelines",
-      "Collaborated with top Indonesian influencers (@graciacarolinee, @dr.gracehan, @investorsaham.id)",
-      "Executed viral-focused edits within brand boundaries",
-      "Managed content for education and investment-focused creators"
+      "Delivered 21.7M+ views on Google Indonesia campaign",
+      "Maintained 100% compliance with strict brand guidelines",
+      "Collaborated with top Indonesian influencers"
     ],
-    tags: ["Video Editing", "Brand Compliance", "KOL Management", "Premiere Pro"],
-    color: "#7B68EE"
+    tags: ["Video Editing", "Brand Compliance", "KOL Management"],
+    color: "#BF5AF2"
   },
   {
     id: 3,
@@ -61,63 +76,27 @@ export const experiences = [
     type: "Organization Leadership",
     period: "July 2024 - July 2025",
     location: "Semarang State Polytechnic",
-    description: "Led digital communication strategy for Student Executive Board serving 4,500+ students. Responsible for brand identity design and execution across all media channels as Social Media Manager and Designer.",
+    description: "Led digital communication strategy for 4,500+ students.",
     achievements: [
       "Architected explosive growth: 5M+ total Instagram views",
-      "Acquired 4,200+ new followers across Instagram & TikTok",
-      "Generated 145K+ total likes on Instagram",
-      "Launched 3 new media channels (LinkedIn, Spotify, WhatsApp)",
-      "Established consistent brand identity and data-driven content calendar",
-      "Implemented FOMO method to increase engagement rates",
-      "Produced majority of visual assets for all major campaigns"
+      "Acquired 4,200+ new followers",
+      "Launched 3 new media channels"
     ],
-    tags: ["Social Media Management", "Brand Identity", "Content Calendar", "Leadership"],
-    color: "#FF6B35"
+    tags: ["Social Media", "Brand Identity", "Leadership"],
+    color: "#FF2D55"
   },
-  {
-    id: 4,
-    title: "Video Editor Intern",
-    company: "Vocasia Jakarta",
-    type: "Internship",
-    period: "2024",
-    location: "Remote",
-    description: "Contributed to educational content production for Indonesia's leading online learning platform, creating engaging video materials for various courses.",
-    achievements: [
-      "Produced educational content for e-learning platform",
-      "Collaborated with instructional designers",
-      "Maintained consistent quality standards across multiple courses"
-    ],
-    tags: ["Video Production", "E-learning Content", "Educational Media"],
-    color: "#34D399"
-  },
-  {
-    id: 5,
-    title: "Broadcasting Intern",
-    company: "Semarang TV",
-    type: "Internship",
-    period: "2021",
-    location: "Semarang",
-    description: "Early career experience in traditional broadcast media, learning fundamentals of video production and live broadcasting.",
-    achievements: [
-      "Gained hands-on experience in broadcast production",
-      "Assisted in live show productions",
-      "Learned industry-standard broadcast workflows"
-    ],
-    tags: ["Broadcasting", "Live Production", "Traditional Media"],
-    color: "#A78BFA"
-  }
 ];
 
-export const projects = [
+export const projects: Project[] = [
   {
     id: 1,
     title: "Google Indonesia - Gemini Student Promo",
     client: "Google Indonesia x Gracia Caroline",
     category: "Brand Campaign",
     year: "2024",
-    description: "Produced a promotional video facing two conflicting objectives: maintaining 100% compliance with Google's strict multinational brand guidelines while creating viral-focused content with engaging visuals to maximize audience retention.",
+    description: "Promotional video maintaining 100% compliance with Google's strict brand guidelines while creating viral-focused content with engaging visuals.",
     challenge: "Balance brand compliance with viral content creation for maximum engagement",
-    solution: "Intensive communication with management, executed dynamic edits (strong hooks, fast pacing) within brand boundaries, ensured every frame met Google's standards",
+    solution: "Intensive communication with management, executed dynamic edits with strong hooks and fast pacing within brand boundaries",
     results: [
       "21.7M+ views on single platform",
       "100% brand guideline compliance",
@@ -126,27 +105,29 @@ export const projects = [
       "34.7K comments"
     ],
     image: "/images/google-gemini.jpg",
-    videoEmbed: "YOUTUBE_VIDEO_ID", // GANTI
+    videoEmbed: "dQw4w9WgXcQ", // GANTI dengan YouTube ID real
+    videoPlatform: "youtube",
     tags: ["Video Editing", "Brand Compliance", "Viral Marketing", "Adobe Premiere"],
     featured: true
   },
   {
     id: 2,
     title: "Nore Inovasi - Multi-Client Content Strategy",
-    client: "CV. Nore Inovasi (5+ Clients)",
+    client: "CV. Nore Inovasi",
     category: "Social Media Management",
     year: "2025",
-    description: "End-to-end content production and strategy for diverse client portfolio. From short-form videos and event documentation to motion graphics, including both internal company content and client-facing materials.",
-    challenge: "Scaling stagnant Instagram accounts while managing diverse content needs across multiple clients",
-    solution: "Analyzed performance data via Google Analytics, developed data-driven content strategy, collaborated intensely with paid media team, provided organically proven visuals for paid campaigns",
+    description: "End-to-end content production for diverse client portfolio, from short-form videos to motion graphics.",
+    challenge: "Scaling stagnant Instagram accounts while managing diverse content needs",
+    solution: "Data-driven content strategy, collaborated with paid media team, provided organically proven visuals",
     results: [
       "393K+ total views generated",
       "348% increase in link clicks",
-      "427% growth in profile visits (year-over-year)",
-      "5+ accounts successfully managed",
-      "Promoted from intern to specialist in 4 months"
+      "427% growth in profile visits",
+      "5+ accounts successfully managed"
     ],
     image: "/images/nore-inovasi.jpg",
+    videoEmbed: "CzXxXxXxX", // GANTI dengan Instagram post ID
+    videoPlatform: "instagram",
     tags: ["Content Strategy", "Motion Graphics", "Analytics", "Multi-platform"],
     featured: true
   },
@@ -156,17 +137,18 @@ export const projects = [
     client: "Student Executive Board Polines",
     category: "Organization Branding",
     year: "2024-2025",
-    description: "Complete digital transformation for organization serving 4,500+ students. Established brand identity from scratch, created data-driven content calendar, and modernized communication channels.",
-    challenge: "Fragmented digital presence with outdated communication channels and inconsistent branding",
-    solution: "Established unified brand identity, produced majority of visual assets, launched 3 new media channels (LinkedIn, Spotify, WhatsApp), implemented FOMO-driven engagement strategy",
+    description: "Complete digital transformation for organization serving 4,500+ students with unified brand identity.",
+    challenge: "Fragmented digital presence with outdated communication channels",
+    solution: "Established brand identity, launched 3 new channels, implemented FOMO-driven engagement",
     results: [
       "5M+ total Instagram views",
-      "4,200+ new followers (Instagram & TikTok)",
-      "145K+ total Instagram likes",
-      "Successfully launched 3 new media channels",
-      "Fundamentally modernized organizational communication"
+      "4,200+ new followers",
+      "145K+ total likes",
+      "3 new media channels launched"
     ],
     image: "/images/bem-polines.jpg",
+    videoEmbed: "7123456789012345678", // GANTI dengan TikTok video ID
+    videoPlatform: "tiktok",
     tags: ["Brand Identity", "Content Strategy", "Multi-platform", "Leadership"],
     featured: true
   },
@@ -176,55 +158,18 @@ export const projects = [
     client: "Various KOLs via Angkasa Management",
     category: "Influencer Content",
     year: "2024-Present",
-    description: "Ongoing content creation for multiple high-profile Indonesian influencers focusing on education and investment content. Learned to adapt editing style to each creator's unique voice while maintaining engagement.",
+    description: "Ongoing content creation for multiple high-profile Indonesian influencers.",
     challenge: "Balancing tight brand briefs with creator authenticity",
-    solution: "Developed flexible editing workflows, maintained content management systems, built knowledge base for each creator's style",
+    solution: "Developed flexible editing workflows, maintained content management systems",
     results: [
       "Worked with 80+ major brands",
       "Reached 18M+ collective audience",
-      "Maintained long-term client relationships",
-      "Consistent engagement across diverse content types"
+      "Maintained long-term client relationships"
     ],
     image: "/images/influencer-work.jpg",
     tags: ["Video Editing", "Content Management", "KOL Collaboration"],
     featured: false
   },
-  {
-    id: 5,
-    title: "Electro Charity Concert 2024",
-    client: "HME Polines",
-    category: "Event Coverage",
-    year: "2024",
-    description: "Assisted social media and content team for large-scale charity event, managing real-time content creation and distribution.",
-    challenge: "Real-time content creation during live event",
-    solution: "Pre-planned content calendar, on-site coverage team coordination, rapid editing and posting workflow",
-    results: [
-      "Successful event documentation",
-      "Real-time social media engagement",
-      "Complete event archive created"
-    ],
-    image: "/images/ecc-2024.jpg",
-    tags: ["Event Coverage", "Live Content", "Team Coordination"],
-    featured: false
-  },
-  {
-    id: 6,
-    title: "Gerakan Mengajar Desa Jateng",
-    client: "GMD Jawa Tengah",
-    category: "Social Impact Campaign",
-    year: "2023-2024",
-    description: "Managed social media and content for educational volunteer organization. Created design templates and established content schedule for consistent posting.",
-    challenge: "Building awareness for volunteer education initiative",
-    solution: "Created consistent design system, established content schedule, documented volunteer activities",
-    results: [
-      "Increased volunteer applications",
-      "Built consistent brand presence",
-      "Effective community engagement"
-    ],
-    image: "/images/gmd-jateng.jpg",
-    tags: ["Social Impact", "Design System", "Content Scheduling"],
-    featured: false
-  }
 ];
 
 export const skills = {
@@ -235,20 +180,16 @@ export const skills = {
     },
     {
       category: "Creative Design",
-      items: ["Figma", "Adobe Photoshop", "Adobe Illustrator", "Canva", "Adobe XD"]
+      items: ["Figma", "Adobe Photoshop", "Adobe Illustrator", "Canva"]
     },
     {
       category: "Analytics & Performance Tracking",
-      items: ["Google Analytics", "Instagram Insights", "Meta Business Suite", "YouTube Analytics"]
+      items: ["Google Analytics", "Instagram Insights", "Meta Business Suite"]
     },
     {
       category: "Content Strategy & Management",
-      items: ["Content Calendar Planning", "Social Media Management", "Brand Identity Design", "Multi-platform Strategy"]
+      items: ["Content Calendar Planning", "Social Media Management", "Brand Identity Design"]
     },
-    {
-      category: "Project Management",
-      items: ["Google Workspace", "Notion", "Trello", "Asana", "Team Collaboration"]
-    }
   ],
   languages: [
     { name: "Bahasa Indonesia", level: "Native" },
@@ -268,8 +209,7 @@ export const education = [
     gpa: "3.71 / 4.00",
     highlights: [
       "Focus on Multimedia and Web Development",
-      "Active in Student Organizations",
-      "Leadership role in BEM Polines"
+      "Active in Student Organizations"
     ]
   },
   {
@@ -277,23 +217,7 @@ export const education = [
     degree: "Vocational High School - Multimedia",
     period: "2018 - 2021",
     highlights: [
-      "Specialized in Multimedia Production",
-      "Foundation in Video Editing and Design"
+      "Specialized in Multimedia Production"
     ]
-  }
-];
-
-export const testimonials = [
-  {
-    name: "Angkasa Management Team",
-    role: "Management Agency",
-    content: "Aditya consistently delivers high-quality work while maintaining strict brand compliance. His ability to create viral content within guidelines is exceptional.",
-    avatar: "/images/testimonial-1.jpg"
-  },
-  {
-    name: "Nore Inovasi Leadership",
-    role: "Digital Agency",
-    content: "Promoted from intern to specialist in just 4 months due to outstanding performance. Data-driven approach and creative execution make him invaluable to our team.",
-    avatar: "/images/testimonial-2.jpg"
   }
 ];

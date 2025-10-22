@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Instagram, Linkedin, ExternalLink, Download } from 'lucide-react';
 import { personalInfo } from '@/lib/data';
+import ContactForm from './ContactForm';
 
 export default function Contact() {
   const socialLinks = [
@@ -26,6 +27,15 @@ export default function Contact() {
       icon: ExternalLink,
       color: '#1769FF',
       username: 'aditysat'
+    },
+  ];
+    const wa = [
+    { 
+      name: 'Whatsapp', 
+      url: personalInfo.phone, 
+      icon: ExternalLink,
+      color: '#1769FF',
+      username: '082225500898'
     },
   ];
 

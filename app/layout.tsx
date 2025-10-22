@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import StructuredData from "@/components/StructuredData";
 import GoogleAnalytics from '@/components/GoogleAnalytics';
+import { LanguageProvider } from '@/lib/LanguageContext';
 
 
 const inter = Inter({ 
@@ -77,6 +78,8 @@ export const metadata: Metadata = {
     // google: 'your-verification-code',
   },
 };
+
+
 
 export default function RootLayout({
   children,

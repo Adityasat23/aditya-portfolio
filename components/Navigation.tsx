@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import ThemeToggle from './ThemeToggle';
 const navItems = [
   { name: 'About', href: '#about' },
   { name: 'Experience', href: '#experience' },
@@ -11,7 +11,8 @@ const navItems = [
   { name: 'Skills', href: '#skills' },
   { name: 'Contact', href: '#contact' },
 ];
-
+<div className="hidden md:block">
+</div>
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -21,7 +22,6 @@ export default function Navigation() {
       setIsScrolled(window.scrollY > 50);
     };
     
-    // Close mobile menu on scroll
     const handleScrollClose = () => {
       if (isMobileMenuOpen) {
         setIsMobileMenuOpen(false);
@@ -37,7 +37,6 @@ export default function Navigation() {
     };
   }, [isMobileMenuOpen]);
 
-  // FIXED: Proper smooth scroll handler for iOS
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
@@ -46,7 +45,7 @@ export default function Navigation() {
     const targetElement = document.getElementById(targetId);
     
     if (targetElement) {
-      const navHeight = 64; // Height of fixed navigation
+      const navHeight = 64;
       const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
       
       window.scrollTo({
@@ -54,7 +53,6 @@ export default function Navigation() {
         behavior: 'smooth'
       });
       
-      // Update URL hash without jumping
       if (window.history.pushState) {
         window.history.pushState(null, '', href);
       }
@@ -65,68 +63,52 @@ export default function Navigation() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      style={{
-        position: 'fixed',
-        top: 0,
-        width: '100%',
-        zIndex: 50,
-        backgroundColor: isScrolled ? 'rgba(10, 14, 39, 0.95)' : 'transparent',
-        backdropFilter: isScrolled ? 'blur(12px)' : 'none',
-        boxShadow: isScrolled ? '0 10px 30px rgba(0,0,0,0.3)' : 'none',
-        transition: 'all 0.3s ease',
-      }}
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-black/80 backdrop-blur-xl shadow-lg border-b border-white/10' 
+          : 'bg-transparent'
+      }`}
     >
-      <div style={{ maxWidth: '72rem', margin: '0 auto', padding: '0 1rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '4rem' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <motion.a
             href="#"
-            className="gradient-text"
-            style={{ fontSize: '1.25rem', fontWeight: 'bold' }}
+            className="text-xl font-bold gradient-text"
             whileHover={{ scale: 1.05 }}
           >
             AS
           </motion.a>
 
-          {/* Desktop Menu */}
-          <div style={{ display: 'none' }} className="md:flex md:gap-8">
+          {/* Desktop Menu - FIXED: Always visible on desktop */}
+          <div className="hidden md:flex md:items-center md:gap-8">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                style={{ color: '#d1d5db', transition: 'color 0.2s' }}
-                onMouseEnter={(e) => e.currentTarget.style.color = '#4A90E2'}
-                onMouseLeave={(e) => e.currentTarget.style.color = '#d1d5db'}
+                onClick={(e) => handleNavClick(e, item.href)}
+                className="text-gray-300 hover:text-white transition-colors duration-200 cursor-pointer text-sm font-medium"
               >
                 {item.name}
               </a>
             ))}
           </div>
 
-          {/* CTA Button */}
+          {/* CTA Button - Desktop */}
           <motion.a
             href="#contact"
-            style={{
-              display: 'none',
-              background: 'linear-gradient(to right, #4A90E2, #7B68EE)',
-              padding: '0.5rem 1.5rem',
-              borderRadius: '9999px',
-              color: 'white',
-              fontWeight: '500',
-              transition: 'all 0.3s',
-            }}
-            className="md:block"
+            onClick={(e) => handleNavClick(e, '#contact')}
+            className="hidden md:block px-6 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Let&apos;s Collaborate
           </motion.a>
-
           {/* Mobile Menu Button */}
           <button
-            style={{ display: 'block', color: 'white' }}
-            className="md:hidden"
+            className="md:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -140,40 +122,23 @@ export default function Navigation() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            style={{ backgroundColor: '#151B3B' }}
-            className="md:hidden"
+            className="md:hidden bg-black/95 backdrop-blur-xl border-b border-white/10"
           >
-            <div style={{ padding: '0.5rem 1rem 1rem' }}>
+            <div className="px-4 pt-2 pb-4 space-y-2">
               {navItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  style={{ 
-                    display: 'block', 
-                    padding: '0.5rem 0', 
-                    color: '#d1d5db',
-                    transition: 'color 0.2s'
-                  }}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#4A90E2'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = '#d1d5db'}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className="block py-3 px-4 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all cursor-pointer"
                 >
                   {item.name}
                 </a>
               ))}
               <a
                 href="#contact"
-                style={{
-                  display: 'block',
-                  marginTop: '1rem',
-                  padding: '0.5rem',
-                  textAlign: 'center',
-                  background: 'linear-gradient(to right, #4A90E2, #7B68EE)',
-                  borderRadius: '9999px',
-                  color: 'white',
-                  fontWeight: '500',
-                }}
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={(e) => handleNavClick(e, '#contact')}
+                className="block py-3 text-center bg-gradient-to-r from-blue-500 to-purple-500 rounded-full text-white font-medium mt-4"
               >
                 Let&apos;s Collaborate
               </a>
