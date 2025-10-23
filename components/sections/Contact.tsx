@@ -1,11 +1,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Instagram, Linkedin, ExternalLink, Download } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Linkedin, ExternalLink, Download, MessageCircle } from 'lucide-react';
 import { personalInfo } from '@/lib/data';
-import ContactForm from './ContactForm';
+import { useState } from 'react';
 
 export default function Contact() {
+  const [showPhoneOptions, setShowPhoneOptions] = useState(false);
+
   const socialLinks = [
     { 
       name: 'Instagram', 
@@ -29,20 +31,21 @@ export default function Contact() {
       username: 'aditysat'
     },
   ];
-    const wa = [
-    { 
-      name: 'Whatsapp', 
-      url: personalInfo.phone, 
-      icon: ExternalLink,
-      color: '#1769FF',
-      username: '082225500898'
-    },
-  ];
+
+  const handlePhoneClick = (type: 'whatsapp' | 'call') => {
+    const phone = personalInfo.phone;
+    if (type === 'whatsapp') {
+      window.open(`https://wa.me/62${phone.substring(1)}`, '_blank');
+    } else {
+      window.location.href = `tel:${phone}`;
+    }
+    setShowPhoneOptions(false);
+  };
 
   return (
-    <section id="contact" style={{ backgroundColor: '#0A0E27', position: 'relative', overflow: 'hidden' }}>
+    <section id="contact" style={{ backgroundColor: '#000000', position: 'relative', overflow: 'hidden' }}>
       {/* Background Gradient */}
-      <div style={{ position: 'absolute', inset: 0, opacity: 0.5 }}>
+      <div style={{ position: 'absolute', inset: 0, opacity: 0.3 }}>
         <div style={{
           position: 'absolute',
           top: '50%',
@@ -50,7 +53,7 @@ export default function Contact() {
           transform: 'translate(-50%, -50%)',
           width: '40rem',
           height: '40rem',
-          background: 'radial-gradient(circle, rgba(74, 144, 226, 0.2), transparent)',
+          background: 'radial-gradient(circle, rgba(10, 132, 255, 0.3), transparent)',
           filter: 'blur(100px)'
         }}></div>
       </div>
@@ -84,7 +87,7 @@ export default function Contact() {
               Get In Touch
             </h3>
             <p style={{ color: '#d1d5db', marginBottom: '2rem', lineHeight: '1.75' }}>
-              I am always interested in hearing about new projects and opportunities. 
+              I&apos;m always interested in hearing about new projects and opportunities. 
               Whether you need content creation, video editing, or social media strategy, 
               feel free to reach out!
             </p>
@@ -94,82 +97,68 @@ export default function Contact() {
               <motion.a
                 href={`mailto:${personalInfo.email}`}
                 whileHover={{ x: 5 }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '1rem',
-                  padding: '1rem',
-                  borderRadius: '0.75rem',
-                  backgroundColor: 'rgba(74, 144, 226, 0.1)',
-                  border: '1px solid rgba(74, 144, 226, 0.2)',
-                  textDecoration: 'none',
-                  transition: 'all 0.3s'
-                }}
+                className="flex items-center gap-4 p-4 rounded-xl glass-card hover:glass-card-elevated transition-all"
               >
-                <div style={{
-                  padding: '0.75rem',
-                  borderRadius: '0.5rem',
-                  backgroundColor: '#4A90E2'
-                }}>
-                  <Mail size={20} style={{ color: 'white' }} />
+                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                  <Mail size={20} className="text-white" />
                 </div>
                 <div>
-                  <p style={{ fontSize: '0.75rem', color: '#9ca3af', marginBottom: '0.125rem' }}>Email</p>
-                  <p style={{ color: 'white', fontSize: '0.875rem', fontWeight: '500' }}>{personalInfo.email}</p>
+                  <p className="text-xs text-gray-400 mb-1">Email</p>
+                  <p className="text-white text-sm font-medium">{personalInfo.email}</p>
                 </div>
               </motion.a>
 
-              <motion.a
-                href={`tel:${personalInfo.phone}`}
-                whileHover={{ x: 5 }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '1rem',
-                  padding: '1rem',
-                  borderRadius: '0.75rem',
-                  backgroundColor: 'rgba(123, 104, 238, 0.1)',
-                  border: '1px solid rgba(123, 104, 238, 0.2)',
-                  textDecoration: 'none',
-                  transition: 'all 0.3s'
-                }}
-              >
-                <div style={{
-                  padding: '0.75rem',
-                  borderRadius: '0.5rem',
-                  backgroundColor: '#7B68EE'
-                }}>
-                  <Phone size={20} style={{ color: 'white' }} />
-                </div>
-                <div>
-                  <p style={{ fontSize: '0.75rem', color: '#9ca3af', marginBottom: '0.125rem' }}>Phone</p>
-                  <p style={{ color: 'white', fontSize: '0.875rem', fontWeight: '500' }}>{personalInfo.phone}</p>
-                </div>
-              </motion.a>
+              {/* Phone with Options */}
+              <div className="relative">
+                <motion.button
+                  onClick={() => setShowPhoneOptions(!showPhoneOptions)}
+                  whileHover={{ x: 5 }}
+                  className="w-full flex items-center gap-4 p-4 rounded-xl glass-card hover:glass-card-elevated transition-all text-left"
+                >
+                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                    <Phone size={20} className="text-white" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-400 mb-1">Phone</p>
+                    <p className="text-white text-sm font-medium">{personalInfo.phone}</p>
+                  </div>
+                </motion.button>
+
+                {/* Phone Options Dropdown */}
+                {showPhoneOptions && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="absolute top-full left-0 right-0 mt-2 glass-card-elevated rounded-xl overflow-hidden z-10"
+                  >
+                    <button
+                      onClick={() => handlePhoneClick('whatsapp')}
+                      className="w-full flex items-center gap-3 p-4 hover:bg-white/10 transition-colors text-left"
+                    >
+                      <MessageCircle size={20} className="text-green-400" />
+                      <span className="text-white text-sm">WhatsApp</span>
+                    </button>
+                    <button
+                      onClick={() => handlePhoneClick('call')}
+                      className="w-full flex items-center gap-3 p-4 hover:bg-white/10 transition-colors text-left"
+                    >
+                      <Phone size={20} className="text-blue-400" />
+                      <span className="text-white text-sm">Call</span>
+                    </button>
+                  </motion.div>
+                )}
+              </div>
 
               <motion.div
                 whileHover={{ x: 5 }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '1rem',
-                  padding: '1rem',
-                  borderRadius: '0.75rem',
-                  backgroundColor: 'rgba(255, 107, 53, 0.1)',
-                  border: '1px solid rgba(255, 107, 53, 0.2)',
-                  transition: 'all 0.3s'
-                }}
+                className="flex items-center gap-4 p-4 rounded-xl glass-card"
               >
-                <div style={{
-                  padding: '0.75rem',
-                  borderRadius: '0.5rem',
-                  backgroundColor: '#FF6B35'
-                }}>
-                  <MapPin size={20} style={{ color: 'white' }} />
+                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
+                  <MapPin size={20} className="text-white" />
                 </div>
                 <div>
-                  <p style={{ fontSize: '0.75rem', color: '#9ca3af', marginBottom: '0.125rem' }}>Location</p>
-                  <p style={{ color: 'white', fontSize: '0.875rem', fontWeight: '500' }}>{personalInfo.location}</p>
+                  <p className="text-xs text-gray-400 mb-1">Location</p>
+                  <p className="text-white text-sm font-medium">{personalInfo.location}</p>
                 </div>
               </motion.div>
             </div>
@@ -180,19 +169,7 @@ export default function Contact() {
               download
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                padding: '0.75rem 1.5rem',
-                borderRadius: '0.5rem',
-                background: 'linear-gradient(to right, #4A90E2, #7B68EE)',
-                color: 'white',
-                fontSize: '0.875rem',
-                fontWeight: '500',
-                textDecoration: 'none',
-                transition: 'all 0.3s'
-              }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-medium hover:shadow-lg hover:shadow-blue-500/50 transition-all"
             >
               <Download size={18} />
               Download Resume
@@ -219,59 +196,43 @@ export default function Contact() {
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.02, x: 5 }}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '1.5rem',
-                    borderRadius: '0.75rem',
-                    background: 'linear-gradient(to bottom right, #1F2747, #0A0E27)',
-                    border: `1px solid ${social.color}40`,
-                    textDecoration: 'none',
-                    transition: 'all 0.3s',
-                  }}
+                  className="flex items-center justify-between p-6 rounded-xl glass-card hover:glass-card-elevated transition-all"
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <div style={{
-                      padding: '0.75rem',
-                      borderRadius: '0.5rem',
-                      backgroundColor: `${social.color}20`,
-                      border: `1px solid ${social.color}40`
-                    }}>
-                      <social.icon size={24} style={{ color: social.color }} />
+                    <div 
+                      className="w-12 h-12 rounded-lg flex items-center justify-center"
+                      style={{
+                        background: `linear-gradient(135deg, ${social.color}, ${social.color}dd)`,
+                      }}
+                    >
+                      <social.icon size={24} className="text-white" />
                     </div>
                     <div>
-                      <p style={{ color: 'white', fontSize: '0.875rem', fontWeight: '600', marginBottom: '0.125rem' }}>
+                      <p className="text-white text-sm font-semibold mb-1">
                         {social.name}
                       </p>
-                      <p style={{ color: '#9ca3af', fontSize: '0.75rem' }}>
+                      <p className="text-gray-400 text-xs">
                         {social.username}
                       </p>
                     </div>
                   </div>
-                  <ExternalLink size={18} style={{ color: '#9ca3af' }} />
+                  <ExternalLink size={18} className="text-gray-400" />
                 </motion.a>
               ))}
             </div>
 
-            {/* Quick Stats Card */}
+            {/* Response Time Card */}
             <motion.div
               whileHover={{ y: -5 }}
-              style={{
-                padding: '2rem',
-                borderRadius: '1rem',
-                background: 'linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(123, 104, 238, 0.2))',
-                border: '1px solid rgba(74, 144, 226, 0.3)',
-                textAlign: 'center'
-              }}
+              className="p-8 rounded-2xl glass-card-elevated text-center"
             >
-              <p style={{ fontSize: '0.875rem', color: '#9ca3af', marginBottom: '1rem' }}>
+              <p className="text-sm text-gray-400 mb-2">
                 Response Time
               </p>
-              <p style={{ fontSize: '2rem', fontWeight: 'bold', color: 'white', marginBottom: '0.5rem' }}>
+              <p className="text-4xl font-bold text-white mb-2">
                 &lt; 24 Hours
               </p>
-              <p style={{ fontSize: '0.875rem', color: '#4A90E2' }}>
+              <p className="text-sm text-blue-400">
                 Usually within the same day
               </p>
             </motion.div>
@@ -284,17 +245,12 @@ export default function Contact() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          style={{
-            marginTop: '4rem',
-            paddingTop: '2rem',
-            borderTop: '1px solid rgba(74, 144, 226, 0.2)',
-            textAlign: 'center'
-          }}
+          className="mt-20 pt-8 border-t border-white/10 text-center"
         >
-          <p style={{ color: '#9ca3af', fontSize: '0.875rem' }}>
+          <p className="text-gray-400 text-sm">
             © 2025 Aditya Satria Pratama. Built with Next.js & Framer Motion.
           </p>
-          <p style={{ color: '#4A90E2', fontSize: '0.75rem', marginTop: '0.5rem' }}>
+          <p className="text-blue-400 text-xs mt-2">
             Designed & Developed with passion for digital content
           </p>
         </motion.div>

@@ -3,17 +3,19 @@
 import { motion } from 'framer-motion';
 import { Award, TrendingUp, Users, Zap } from 'lucide-react';
 import { personalInfo, education } from '@/lib/data';
+import Lanyard from '@/components/ui/Lanyard';
+import CountUp from '@/components/ui/CountUp';
 
 const stats = [
-  { icon: TrendingUp, value: "21.7M+", label: "Total Views Generated" },
-  { icon: Users, value: "80+", label: "Brands Collaborated" },
-  { icon: Award, value: "5M+", label: "Social Media Reach" },
-  { icon: Zap, value: "427%", label: "Growth Achieved" },
+  { icon: TrendingUp, value: 21.7, suffix: 'M+', label: "Total Views Generated" },
+  { icon: Users, value: 80, suffix: '+', label: "Brands Collaborated" },
+  { icon: Award, value: 5, suffix: 'M+', label: "Social Media Reach" },
+  { icon: Zap, value: 427, suffix: '%', label: "Growth Achieved" },
 ];
 
 export default function About() {
   return (
-    <section id="about" style={{ backgroundColor: '#0A0E27', position: 'relative', overflow: 'hidden' }}>
+    <section id="about" style={{ backgroundColor: '#0a0a0a', position: 'relative', overflow: 'hidden' }}>
       <div className="section-container">
         {/* Section Header */}
         <motion.div
@@ -33,9 +35,23 @@ export default function About() {
 
         {/* Main Content Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '3rem', marginBottom: '4rem' }} className="lg:grid-cols-2">
-          {/* Left: Bio */}
+          {/* Left: Lanyard Card */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <Lanyard
+              image={personalInfo.profileImage}
+              name={personalInfo.name}
+              title={personalInfo.title}
+            />
+          </motion.div>
+
+          {/* Right: Bio & Education */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -48,90 +64,48 @@ export default function About() {
                 I&apos;m a <strong style={{ color: 'white' }}>Digital Creative Specialist</strong> with a proven track record of creating high-impact content for influencers and viral campaigns. I combine creative production expertise with performance analytics to deliver content that drives measurable business results.
               </p>
               <p style={{ marginBottom: '1rem' }}>
-                My journey in digital content creation spans from working with <strong style={{ color: 'white' }}>major brands like Indofood CBP, Google Indonesia</strong>, to managing social media strategies for organizations serving thousands of students.
+                My journey spans from working with <strong style={{ color: 'white' }}>major brands like Indofood CBP, Google Indonesia</strong>, to managing social media strategies for thousands of students.
               </p>
               <p>
-                I believe in the philosophy: <em style={{ color: '#4A90E2' }}>&quot;Where Creativity Meets Critical Thinking&quot;</em> — every creative decision I make is backed by data and strategic thinking.
+                I believe in: <em className="gradient-text font-semibold">&quot;Where Creativity Meets Critical Thinking&quot;</em> — every creative decision is backed by data and strategic thinking.
               </p>
             </div>
 
             {/* Education */}
-            <div>
+            <div className="mb-6">
               <h4 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem', color: 'white' }}>
                 Education
               </h4>
               {education.map((edu, index) => (
-                <div key={index} style={{ marginBottom: '1.5rem', paddingLeft: '1rem', borderLeft: '2px solid #4A90E2' }}>
+                <div key={index} className="mb-4 pl-4 border-l-2 border-blue-500">
                   <h5 style={{ fontWeight: '600', color: 'white' }}>{edu.degree}</h5>
-                  <p style={{ color: '#7B68EE', fontSize: '0.875rem' }}>{edu.institution}</p>
+                  <p style={{ color: '#BF5AF2', fontSize: '0.875rem' }}>{edu.institution}</p>
                   <p style={{ color: '#9ca3af', fontSize: '0.875rem' }}>{edu.period}</p>
                   {edu.gpa && (
-                    <p style={{ color: '#4A90E2', fontSize: '0.875rem', fontWeight: '500' }}>GPA: {edu.gpa}</p>
+                    <p style={{ color: '#0A84FF', fontSize: '0.875rem', fontWeight: '500' }}>GPA: {edu.gpa}</p>
                   )}
                 </div>
               ))}
             </div>
-          </motion.div>
 
-          {/* Right: Stats Cards */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  style={{
-                    background: 'linear-gradient(to bottom right, #151B3B, #1F2747)',
-                    padding: '1.5rem',
-                    borderRadius: '1rem',
-                    border: '1px solid rgba(74, 144, 226, 0.2)',
-                    transition: 'all 0.3s',
-                  }}
-                >
-                  <stat.icon size={32} style={{ color: '#4A90E2', marginBottom: '1rem' }} />
-                  <p style={{ fontSize: '1.75rem', fontWeight: 'bold', color: 'white', marginBottom: '0.25rem' }}>
-                    {stat.value}
-                  </p>
-                  <p style={{ color: '#9ca3af', fontSize: '0.875rem' }}>
-                    {stat.label}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Contact Info Card */}
+            {/* Contact Card */}
             <motion.div
               whileHover={{ y: -5 }}
-              style={{
-                marginTop: '1.5rem',
-                background: 'linear-gradient(to right, rgba(74, 144, 226, 0.1), rgba(123, 104, 238, 0.1))',
-                padding: '1.5rem',
-                borderRadius: '1rem',
-                border: '1px solid rgba(74, 144, 226, 0.3)',
-              }}
+              className="glass-card rounded-2xl p-6"
             >
               <h4 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '1rem', color: 'white' }}>
-                Lets Connect
+                Let&apos;s Connect
               </h4>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 <a 
                   href={`mailto:${personalInfo.email}`}
-                  style={{ color: '#d1d5db', fontSize: '0.875rem', transition: 'color 0.2s' }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#4A90E2'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = '#d1d5db'}
+                  className="text-gray-300 hover:text-blue-400 transition-colors text-sm"
                 >
                   📧 {personalInfo.email}
                 </a>
                 <a 
                   href={`tel:${personalInfo.phone}`}
-                  style={{ color: '#d1d5db', fontSize: '0.875rem', transition: 'color 0.2s' }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#4A90E2'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = '#d1d5db'}
+                  className="text-gray-300 hover:text-blue-400 transition-colors text-sm"
                 >
                   📱 {personalInfo.phone}
                 </a>
@@ -141,6 +115,29 @@ export default function About() {
               </div>
             </motion.div>
           </motion.div>
+        </div>
+
+        {/* Stats Cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }} className="md:grid-cols-4">
+          {stats.map((stat, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ y: -5 }}
+              className="glass-card rounded-2xl p-6 text-center hover-lift"
+            >
+              <stat.icon size={32} className="mx-auto mb-4 text-blue-400" />
+              <p className="text-2xl font-bold text-white mb-1">
+                <CountUp end={stat.value} duration={2} suffix={stat.suffix} />
+              </p>
+              <p className="text-xs text-gray-400">
+                {stat.label}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
