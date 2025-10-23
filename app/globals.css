@@ -167,33 +167,3 @@
   background-color: rgba(10, 132, 255, 0.3);
   color: white;
 }
-
-html.light {
-  --color-dark-bg: #FFFFFF;
-  --color-dark-card: #F5F5F7;
-  --color-dark-elevated: #FFFFFF;
-  --glass-bg: rgba(255, 255, 255, 0.7);
-}
-
-html.light body {
-  background-color: #FFFFFF;
-  color: #1D1D1F;
-}
-
-html.light .glass-card {
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-html.light .text-gray-300 {
-  color: #6E6E73;
-}
-
-html.light .text-gray-400 {
-  color: #86868B;
-}
-
-html.light ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
-}
-

@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import StructuredData from "@/components/StructuredData";
-import GoogleAnalytics from '@/components/GoogleAnalytics';
-import { LanguageProvider } from '@/lib/LanguageContext';
-
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -13,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://aditya-portfolio-orcin.vercel.app'), // GANTI dengan URL Vercel Anda
+  metadataBase: new URL('https://aditya-portfolio.vercel.app'), // GANTI dengan URL Vercel Anda
   title: {
     default: "Aditya Satria Pratama | Digital Content Specialist",
     template: "%s | Aditya Satria Pratama"
@@ -42,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://aditya-portfolio-orcin.vercel.app", // GANTI dengan URL Vercel Anda
+    url: "https://aditya-portfolio.vercel.app", // GANTI dengan URL Vercel Anda
     siteName: "Aditya Satria Pratama Portfolio",
     title: "Aditya Satria Pratama | Digital Content Specialist",
     description: "Where Creativity Meets Critical Thinking - Creating high-impact content that drives measurable results. 21.7M+ views generated.",
@@ -78,8 +75,6 @@ export const metadata: Metadata = {
     // google: 'your-verification-code',
   },
 };
-
-
 
 export default function RootLayout({
   children,
