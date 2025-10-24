@@ -2,21 +2,24 @@
 
 import { motion } from 'framer-motion';
 import { ArrowDown, Play } from 'lucide-react';
+import { type ComponentType } from 'react';
 import { personalInfo } from '@/lib/data';
 import CountUp from '@/components/CountUp';
 import Prism from '@/components/Prism';
 
-const CountUpAny = CountUp as unknown as React.ComponentType<any>;
+const CountUpAny = CountUp as unknown as ComponentType<any>;
 
 export default function Hero() {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black">
+      {/* Prism Background */}
       <div className="absolute inset-0">
         <Prism animationType="rotate" timeScale={0.5} height={3.5} baseWidth={5.5} scale={3.6} hueShift={0} colorFrequency={1} noise={0.5} glow={1} />
       </div>
 
       <div className="section-container relative z-10">
         <div className="grid items-center gap-12 md:grid-cols-2">
+          {/* Left */}
           <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
             <motion.p className="mb-4 font-medium text-blue-400" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
               {personalInfo.title}
@@ -48,6 +51,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
+          {/* Right */}
           <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.4, duration: 0.8 }} className="relative hidden md:block">
             <div className="relative h-[600px] w-full overflow-hidden rounded-3xl border border-white/20 bg-black/40 p-8 backdrop-blur-xl">
               <div className="absolute inset-0">
@@ -59,8 +63,8 @@ export default function Hero() {
                 <div className="grid grid-cols-2 gap-4">
                   {[
                     { value: 21, decimal: 7, suffix: 'M+', label: 'Total Views' },
-                    { value: 80, suffix: '+',  label: 'Brands' },
-                    { value: 5,  suffix: 'M+', label: 'Social Reach' },
+                    { value: 80, suffix: '+', label: 'Brands' },
+                    { value: 5, suffix: 'M+', label: 'Social Reach' },
                     { value: 427, suffix: '%', label: 'Growth' },
                   ].map((stat, index) => (
                     <motion.div key={index} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 + index * 0.1 }} className="rounded-2xl border border-white/20 bg-black/40 p-4 text-center backdrop-blur-xl">
@@ -77,6 +81,7 @@ export default function Hero() {
           </motion.div>
         </div>
 
+        {/* Scroll Indicator */}
         <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 transform" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2, duration: 1, repeat: Infinity, repeatType: 'reverse' }}>
           <ArrowDown className="text-blue-400" size={24} />
         </motion.div>

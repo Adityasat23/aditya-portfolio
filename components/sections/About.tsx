@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { type ComponentType } from 'react';
 import { personalInfo, education } from '@/lib/data';
 import Lanyard from '@/components/Lanyard';
 import CountUp from '@/components/CountUp';
@@ -8,7 +9,8 @@ import SpotlightCard from '@/components/SpotlightCard';
 import StarBorder from '@/components/StarBorder';
 import { TrendingUp, Users, Award, Zap } from 'lucide-react';
 
-const CountUpAny = CountUp as unknown as React.ComponentType<any>;
+// ⬇️ pakai ComponentType, bukan React.ComponentType (tanpa import)
+const CountUpAny = CountUp as unknown as ComponentType<any>;
 
 const stats = [
   { icon: TrendingUp, value: 21, decimal: 7, suffix: 'M+', label: 'Total Views' },
@@ -37,8 +39,14 @@ export default function About() {
             </h3>
 
             <div className="mb-8 space-y-4 leading-relaxed text-gray-300">
-              <p>I&apos;m a <strong className="text-white">Digital Creative Specialist</strong> with a proven track record of creating high-impact content for influencers and viral campaigns.</p>
-              <p>My journey spans from working with <strong className="text-white">major brands like Indofood CBP, Google Indonesia</strong>, to managing social media strategies for thousands of students.</p>
+              <p>
+                I&apos;m a <strong className="text-white">Digital Creative Specialist</strong> with
+                a proven track record of creating high-impact content for influencers and viral campaigns.
+              </p>
+              <p>
+                My journey spans from working with <strong className="text-white">major brands like
+                Indofood CBP, Google Indonesia</strong>, to managing social media strategies for thousands of students.
+              </p>
               <p className="gradient-text font-semibold">&quot;Where Creativity Meets Critical Thinking&quot;</p>
             </div>
 
@@ -69,10 +77,22 @@ export default function About() {
           {stats.map((stat, index) => (
             <StarBorder key={index} color="cyan" speed="8s">
               <SpotlightCard>
-                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="rounded-2xl bg-black/60 p-6 text-center backdrop-blur-xl">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="rounded-2xl bg-black/60 p-6 text-center backdrop-blur-xl"
+                >
                   <stat.icon size={32} className="mx-auto mb-4 text-blue-400" />
                   <p className="gradient-text mb-2 text-2xl font-bold">
-                    <CountUpAny from={0} to={stat.decimal ? parseFloat(`${stat.value}.${stat.decimal}`) : stat.value} separator="," direction="up" duration={2} />
+                    <CountUpAny
+                      from={0}
+                      to={stat.decimal ? parseFloat(`${stat.value}.${stat.decimal}`) : stat.value}
+                      separator=","
+                      direction="up"
+                      duration={2}
+                    />
                     {stat.suffix}
                   </p>
                   <p className="text-xs text-gray-400">{stat.label}</p>
