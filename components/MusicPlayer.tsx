@@ -11,8 +11,8 @@ export default function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Initialize audio
-    audioRef.current = new Audio('/music/background.mp3'); // Add your music file
+    // Buat audio baru dengan musik lokal atau dari URL
+    audioRef.current = new Audio('/music/background.mp3'); // Taruh file musik di folder public/music/
     audioRef.current.loop = true;
     audioRef.current.volume = volume / 100;
 
@@ -36,19 +36,23 @@ export default function MusicPlayer() {
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play();
+      audioRef.current.play().catch(err => {
+        console.log('Audio play failed:', err);
+      });
     }
     setIsPlaying(!isPlaying);
   };
 
-  const handleVolumeChange = (value: number) => {
-    setVolume(value);
-    if (value === 0 && isPlaying) {
-      setIsPlaying(false);
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = Number(e.target.value);
+    setVolume(newVolume);
+    
+    if (newVolume === 0 && isPlaying) {
       audioRef.current?.pause();
-    } else if (value > 0 && !isPlaying) {
+      setIsPlaying(false);
+    } else if (newVolume > 0 && !isPlaying) {
+      audioRef.current?.play().catch(err => console.log('Audio play failed:', err));
       setIsPlaying(true);
-      audioRef.current?.play();
     }
   };
 
@@ -65,28 +69,28 @@ export default function MusicPlayer() {
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="absolute bottom-20 right-0 glass-card-elevated rounded-2xl p-6 w-64"
+            className="absolute bottom-20 right-0 w-72 rounded-2xl border border-white/20 bg-black/80 p-6 backdrop-blur-xl"
           >
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="flex items-center gap-2 text-sm font-semibold text-white">
                 <Music size={16} className="text-blue-400" />
                 Background Music
               </h3>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-white transition-colors"
+                className="rounded-full p-1 hover:bg-white/10 transition-colors"
               >
-                <X size={16} />
+                <X size={16} className="text-white" />
               </button>
             </div>
 
-            {/* Elastic Slider */}
+            {/* Volume Slider */}
             <div className="space-y-4">
               <div className="relative h-2 bg-white/10 rounded-full overflow-hidden">
                 <motion.div
                   className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
                   style={{ width: `${volume}%` }}
-                  whileHover={{ height: '12px', marginTop: '-4px' }}
+                  animate={{ width: `${volume}%` }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 />
                 <input
@@ -94,15 +98,23 @@ export default function MusicPlayer() {
                   min="0"
                   max="100"
                   value={volume}
-                  onChange={(e) => handleVolumeChange(Number(e.target.value))}
+                  onChange={handleVolumeChange}
                   className="absolute inset-0 w-full opacity-0 cursor-pointer"
                 />
               </div>
 
               <div className="flex items-center justify-between text-xs text-gray-400">
-                <span>{volume}%</span>
+                <div className="flex items-center gap-2">
+                  <VolumeX size={14} />
+                  <span>{volume}%</span>
+                  <Volume2 size={14} />
+                </div>
                 <span>{isPlaying ? 'Playing' : 'Paused'}</span>
               </div>
+
+              <p className="text-xs text-gray-500 text-center">
+                Double click button to play/pause
+              </p>
             </div>
           </motion.div>
         )}
@@ -112,7 +124,7 @@ export default function MusicPlayer() {
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
         onDoubleClick={togglePlay}
-        className="w-14 h-14 rounded-full glass-card-elevated flex items-center justify-center hover:scale-110 transition-all"
+        className="flex h-14 w-14 items-center justify-center rounded-full border border-white/20 bg-black/80 backdrop-blur-xl hover:scale-110 transition-all"
         whileTap={{ scale: 0.95 }}
       >
         {isPlaying ? (

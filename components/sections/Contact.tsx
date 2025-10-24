@@ -5,6 +5,13 @@ import { Mail, Phone, MapPin, Instagram, Linkedin, ExternalLink, Download, Messa
 import { personalInfo } from '@/lib/data';
 import { useState } from 'react';
 
+// TikTok Icon Component
+const TikTokIcon = ({ size = 24 }: { size?: number }) => (
+  <svg viewBox="0 0 48 48" fill="currentColor" width={size} height={size}>
+    <path d="M31.5 8c1.6 2.7 4.1 4.7 7.2 5.4v5.3c-2.6-.1-5.1-.9-7.2-2.2v11.5c0 7.4-5.4 12-12 12-5.7 0-10.5-4.1-11.6-9.6-.2-1-.3-2-.2-3 .4-5.6 5.1-10 10.8-10 1 0 2 .1 2.9.4V24c-.9-.4-1.9-.6-2.9-.6-3.2 0-5.9 2.7-5.9 6s2.7 6 5.9 6c3.2 0 5.9-2.6 5.9-6V8h6.1z"/>
+  </svg>
+);
+
 export default function Contact() {
   const [showPhoneOptions, setShowPhoneOptions] = useState(false);
 
@@ -14,6 +21,13 @@ export default function Contact() {
       url: personalInfo.social.instagram, 
       icon: Instagram,
       color: '#E4405F',
+      username: '@aditysat'
+    },
+    { 
+      name: 'TikTok', 
+      url: 'https://tiktok.com/@aditysat', // GANTI dengan TikTok URL Anda
+      icon: TikTokIcon,
+      color: '#000000',
       username: '@aditysat'
     },
     { 
@@ -43,68 +57,57 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" style={{ backgroundColor: '#000000', position: 'relative', overflow: 'hidden' }}>
+    <section id="contact" className="relative overflow-hidden bg-black">
       {/* Background Gradient */}
-      <div style={{ position: 'absolute', inset: 0, opacity: 0.3 }}>
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '40rem',
-          height: '40rem',
-          background: 'radial-gradient(circle, rgba(10, 132, 255, 0.3), transparent)',
-          filter: 'blur(100px)'
-        }}></div>
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-gradient-radial from-blue-500/30 to-transparent blur-3xl" />
       </div>
 
-      <div className="section-container" style={{ position: 'relative', zIndex: 10 }}>
+      <div className="section-container relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          style={{ textAlign: 'center', marginBottom: '4rem' }}
+          className="mb-16 text-center"
         >
-          <h2 className="gradient-text" style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>
+          <h2 className="gradient-text mb-4 text-4xl font-bold md:text-5xl">
             Let&apos;s Collaborate
           </h2>
-          <p style={{ color: '#9ca3af', maxWidth: '42rem', margin: '0 auto' }}>
+          <p className="mx-auto max-w-2xl text-gray-400">
             Have a project in mind? Let&apos;s create something amazing together
           </p>
         </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '3rem', maxWidth: '64rem', margin: '0 auto' }} className="lg:grid-cols-2">
+        <div className="grid gap-12 lg:grid-cols-2 max-w-6xl mx-auto">
           {/* Left: Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
           >
-            <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white', marginBottom: '1.5rem' }}>
+            <h3 className="mb-6 text-2xl font-bold text-white">
               Get In Touch
             </h3>
-            <p style={{ color: '#d1d5db', marginBottom: '2rem', lineHeight: '1.75' }}>
+            <p className="mb-8 leading-relaxed text-gray-300">
               I&apos;m always interested in hearing about new projects and opportunities. 
               Whether you need content creation, video editing, or social media strategy, 
               feel free to reach out!
             </p>
 
             {/* Contact Methods */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '2rem' }}>
+            <div className="mb-8 space-y-4">
               <motion.a
                 href={`mailto:${personalInfo.email}`}
                 whileHover={{ x: 5 }}
-                className="flex items-center gap-4 p-4 rounded-xl glass-card hover:glass-card-elevated transition-all"
+                className="flex items-center gap-4 rounded-xl p-4 glass-card hover:glass-card-elevated transition-all"
               >
-                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500">
                   <Mail size={20} className="text-white" />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 mb-1">Email</p>
-                  <p className="text-white text-sm font-medium">{personalInfo.email}</p>
+                  <p className="mb-1 text-xs text-gray-400">Email</p>
+                  <p className="text-sm font-medium text-white">{personalInfo.email}</p>
                 </div>
               </motion.a>
 
@@ -113,18 +116,17 @@ export default function Contact() {
                 <motion.button
                   onClick={() => setShowPhoneOptions(!showPhoneOptions)}
                   whileHover={{ x: 5 }}
-                  className="w-full flex items-center gap-4 p-4 rounded-xl glass-card hover:glass-card-elevated transition-all text-left"
+                  className="w-full flex items-center gap-4 rounded-xl p-4 glass-card hover:glass-card-elevated transition-all text-left"
                 >
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-pink-500">
                     <Phone size={20} className="text-white" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400 mb-1">Phone</p>
-                    <p className="text-white text-sm font-medium">{personalInfo.phone}</p>
+                    <p className="mb-1 text-xs text-gray-400">Phone</p>
+                    <p className="text-sm font-medium text-white">{personalInfo.phone}</p>
                   </div>
                 </motion.button>
 
-                {/* Phone Options Dropdown */}
                 {showPhoneOptions && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
@@ -136,14 +138,14 @@ export default function Contact() {
                       className="w-full flex items-center gap-3 p-4 hover:bg-white/10 transition-colors text-left"
                     >
                       <MessageCircle size={20} className="text-green-400" />
-                      <span className="text-white text-sm">WhatsApp</span>
+                      <span className="text-sm text-white">WhatsApp</span>
                     </button>
                     <button
                       onClick={() => handlePhoneClick('call')}
                       className="w-full flex items-center gap-3 p-4 hover:bg-white/10 transition-colors text-left"
                     >
                       <Phone size={20} className="text-blue-400" />
-                      <span className="text-white text-sm">Call</span>
+                      <span className="text-sm text-white">Call</span>
                     </button>
                   </motion.div>
                 )}
@@ -151,14 +153,14 @@ export default function Contact() {
 
               <motion.div
                 whileHover={{ x: 5 }}
-                className="flex items-center gap-4 p-4 rounded-xl glass-card"
+                className="flex items-center gap-4 rounded-xl p-4 glass-card"
               >
-                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500 to-red-500">
                   <MapPin size={20} className="text-white" />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 mb-1">Location</p>
-                  <p className="text-white text-sm font-medium">{personalInfo.location}</p>
+                  <p className="mb-1 text-xs text-gray-400">Location</p>
+                  <p className="text-sm font-medium text-white">{personalInfo.location}</p>
                 </div>
               </motion.div>
             </div>
@@ -169,7 +171,7 @@ export default function Contact() {
               download
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-medium hover:shadow-lg hover:shadow-blue-500/50 transition-all"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 px-6 py-3 text-sm font-medium text-white hover:shadow-lg hover:shadow-blue-500/50 transition-all"
             >
               <Download size={18} />
               Download Resume
@@ -181,14 +183,13 @@ export default function Contact() {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white', marginBottom: '1.5rem' }}>
+            <h3 className="mb-6 text-2xl font-bold text-white">
               Connect With Me
             </h3>
             
             {/* Social Links */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' }}>
+            <div className="mb-8 space-y-4">
               {socialLinks.map((social, index) => (
                 <motion.a
                   key={index}
@@ -196,11 +197,11 @@ export default function Contact() {
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.02, x: 5 }}
-                  className="flex items-center justify-between p-6 rounded-xl glass-card hover:glass-card-elevated transition-all"
+                  className="flex items-center justify-between rounded-xl p-6 glass-card hover:glass-card-elevated transition-all"
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div className="flex items-center gap-4">
                     <div 
-                      className="w-12 h-12 rounded-lg flex items-center justify-center"
+                      className="flex h-12 w-12 items-center justify-center rounded-lg"
                       style={{
                         background: `linear-gradient(135deg, ${social.color}, ${social.color}dd)`,
                       }}
@@ -208,10 +209,10 @@ export default function Contact() {
                       <social.icon size={24} className="text-white" />
                     </div>
                     <div>
-                      <p className="text-white text-sm font-semibold mb-1">
+                      <p className="mb-1 text-sm font-semibold text-white">
                         {social.name}
                       </p>
-                      <p className="text-gray-400 text-xs">
+                      <p className="text-xs text-gray-400">
                         {social.username}
                       </p>
                     </div>
@@ -224,12 +225,12 @@ export default function Contact() {
             {/* Response Time Card */}
             <motion.div
               whileHover={{ y: -5 }}
-              className="p-8 rounded-2xl glass-card-elevated text-center"
+              className="rounded-2xl p-8 glass-card-elevated text-center"
             >
-              <p className="text-sm text-gray-400 mb-2">
+              <p className="mb-2 text-sm text-gray-400">
                 Response Time
               </p>
-              <p className="text-4xl font-bold text-white mb-2">
+              <p className="mb-2 text-4xl font-bold text-white">
                 &lt; 24 Hours
               </p>
               <p className="text-sm text-blue-400">
@@ -244,13 +245,12 @@ export default function Contact() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-20 pt-8 border-t border-white/10 text-center"
+          className="mt-20 border-t border-white/10 pt-8 text-center"
         >
-          <p className="text-gray-400 text-sm">
+          <p className="text-sm text-gray-400">
             © 2025 Aditya Satria Pratama. Built with Next.js & Framer Motion.
           </p>
-          <p className="text-blue-400 text-xs mt-2">
+          <p className="mt-2 text-xs text-blue-400">
             Designed & Developed with passion for digital content
           </p>
         </motion.div>

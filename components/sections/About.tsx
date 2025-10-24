@@ -1,52 +1,46 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Award, TrendingUp, Users, Zap } from 'lucide-react';
 import { personalInfo, education } from '@/lib/data';
-import Lanyard from '@/components/ui/Lanyard';
-import CountUp from '@/components/ui/CountUp';
+import Lanyard from '@/components/Lanyard';
+import CountUp from '@/components/CountUp';
+import SpotlightCard from '@/components/SpotlightCard';
+import StarBorder from '@/components/StarBorder';
+import { TrendingUp, Users, Award, Zap } from 'lucide-react';
 
 const stats = [
-  { icon: TrendingUp, value: 21.7, suffix: 'M+', label: "Total Views Generated" },
-  { icon: Users, value: 80, suffix: '+', label: "Brands Collaborated" },
-  { icon: Award, value: 5, suffix: 'M+', label: "Social Media Reach" },
-  { icon: Zap, value: 427, suffix: '%', label: "Growth Achieved" },
+  { icon: TrendingUp, value: 21, decimal: 7, suffix: 'M+', label: 'Total Views' },
+  { icon: Users, value: 80, suffix: '+', label: 'Brands' },
+  { icon: Award, value: 5, suffix: 'M+', label: 'Social Reach' },
+  { icon: Zap, value: 427, suffix: '%', label: 'Growth' },
 ];
 
 export default function About() {
   return (
-    <section id="about" style={{ backgroundColor: '#0a0a0a', position: 'relative', overflow: 'hidden' }}>
+    <section id="about" className="mesh-gradient relative overflow-hidden py-20">
       <div className="section-container">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          style={{ textAlign: 'center', marginBottom: '4rem' }}
+          className="mb-16 text-center"
         >
-          <h2 className="gradient-text" style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>
+          <h2 className="gradient-text mb-4 text-4xl font-bold md:text-5xl">
             About Me
           </h2>
-          <p style={{ color: '#9ca3af', maxWidth: '42rem', margin: '0 auto' }}>
+          <p className="mx-auto max-w-2xl text-gray-400">
             Bringing Quality with Quantity at the same time
           </p>
         </motion.div>
 
-        {/* Main Content Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '3rem', marginBottom: '4rem' }} className="lg:grid-cols-2">
+        <div className="mb-16 grid gap-12 lg:grid-cols-2">
           {/* Left: Lanyard Card */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
           >
-            <Lanyard
-              image={personalInfo.profileImage}
-              name={personalInfo.name}
-              title={personalInfo.title}
-            />
+            <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} />
           </motion.div>
 
           {/* Right: Bio & Education */}
@@ -54,89 +48,89 @@ export default function About() {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex flex-col justify-center"
           >
-            <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1.5rem' }}>
+            <h3 className="mb-6 text-3xl font-bold">
               Hi, I&apos;m <span className="gradient-text">Aditya Satria Pratama</span>
             </h3>
-            <div style={{ color: '#d1d5db', lineHeight: '1.75', marginBottom: '2rem' }}>
-              <p style={{ marginBottom: '1rem' }}>
-                I&apos;m a <strong style={{ color: 'white' }}>Digital Creative Specialist</strong> with a proven track record of creating high-impact content for influencers and viral campaigns. I combine creative production expertise with performance analytics to deliver content that drives measurable business results.
-              </p>
-              <p style={{ marginBottom: '1rem' }}>
-                My journey spans from working with <strong style={{ color: 'white' }}>major brands like Indofood CBP, Google Indonesia</strong>, to managing social media strategies for thousands of students.
+            <div className="mb-8 space-y-4 leading-relaxed text-gray-300">
+              <p>
+                I&apos;m a <strong className="text-white">Digital Creative Specialist</strong> with
+                a proven track record of creating high-impact content for influencers and viral
+                campaigns.
               </p>
               <p>
-                I believe in: <em className="gradient-text font-semibold">&quot;Where Creativity Meets Critical Thinking&quot;</em> — every creative decision is backed by data and strategic thinking.
+                My journey spans from working with <strong className="text-white">major brands like
+                Indofood CBP, Google Indonesia</strong>, to managing social media strategies for
+                thousands of students.
+              </p>
+              <p className="gradient-text font-semibold">
+                &quot;Where Creativity Meets Critical Thinking&quot;
               </p>
             </div>
 
-            {/* Education */}
-            <div className="mb-6">
-              <h4 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem', color: 'white' }}>
-                Education
-              </h4>
+            <div className="mb-8">
+              <h4 className="mb-4 text-xl font-semibold text-white">Education</h4>
               {education.map((edu, index) => (
-                <div key={index} className="mb-4 pl-4 border-l-2 border-blue-500">
-                  <h5 style={{ fontWeight: '600', color: 'white' }}>{edu.degree}</h5>
-                  <p style={{ color: '#BF5AF2', fontSize: '0.875rem' }}>{edu.institution}</p>
-                  <p style={{ color: '#9ca3af', fontSize: '0.875rem' }}>{edu.period}</p>
+                <div key={index} className="mb-4 border-l-2 border-blue-500 pl-4">
+                  <h5 className="font-semibold text-white">{edu.degree}</h5>
+                  <p className="text-sm text-purple-400">{edu.institution}</p>
+                  <p className="text-sm text-gray-400">{edu.period}</p>
                   {edu.gpa && (
-                    <p style={{ color: '#0A84FF', fontSize: '0.875rem', fontWeight: '500' }}>GPA: {edu.gpa}</p>
+                    <p className="text-sm font-medium text-blue-400">GPA: {edu.gpa}</p>
                   )}
                 </div>
               ))}
             </div>
 
-            {/* Contact Card */}
-            <motion.div
-              whileHover={{ y: -5 }}
-              className="glass-card rounded-2xl p-6"
-            >
-              <h4 style={{ fontSize: '1.125rem', fontWeight: '600', marginBottom: '1rem', color: 'white' }}>
-                Let&apos;s Connect
-              </h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <a 
+            <SpotlightCard className="rounded-2xl border border-white/20 bg-black/40 p-6 backdrop-blur-xl">
+              <h4 className="mb-4 text-lg font-semibold text-white">Let&apos;s Connect</h4>
+              <div className="space-y-3">
+                <a
                   href={`mailto:${personalInfo.email}`}
-                  className="text-gray-300 hover:text-blue-400 transition-colors text-sm"
+                  className="block text-sm text-gray-300 transition-colors hover:text-blue-400"
                 >
                   📧 {personalInfo.email}
                 </a>
-                <a 
+                <a
                   href={`tel:${personalInfo.phone}`}
-                  className="text-gray-300 hover:text-blue-400 transition-colors text-sm"
+                  className="block text-sm text-gray-300 transition-colors hover:text-blue-400"
                 >
                   📱 {personalInfo.phone}
                 </a>
-                <p style={{ color: '#d1d5db', fontSize: '0.875rem' }}>
-                  📍 {personalInfo.location}
-                </p>
+                <p className="text-sm text-gray-300">📍 {personalInfo.location}</p>
               </div>
-            </motion.div>
+            </SpotlightCard>
           </motion.div>
         </div>
 
-        {/* Stats Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }} className="md:grid-cols-4">
+        {/* Stats Cards dengan StarBorder & SpotlightCard */}
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
           {stats.map((stat, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -5 }}
-              className="glass-card rounded-2xl p-6 text-center hover-lift"
-            >
-              <stat.icon size={32} className="mx-auto mb-4 text-blue-400" />
-              <p className="text-2xl font-bold text-white mb-1">
-                <CountUp end={stat.value} duration={2} suffix={stat.suffix} />
-              </p>
-              <p className="text-xs text-gray-400">
-                {stat.label}
-              </p>
-            </motion.div>
+            <StarBorder key={index} as="div" color="cyan" speed="8s">
+              <SpotlightCard>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="rounded-2xl bg-black/60 p-6 text-center backdrop-blur-xl"
+                >
+                  <stat.icon size={32} className="mx-auto mb-4 text-blue-400" />
+                  <p className="gradient-text mb-2 text-2xl font-bold">
+                    <CountUp
+                      from={0}
+                      to={stat.decimal ? parseFloat(`${stat.value}.${stat.decimal}`) : stat.value}
+                      separator=","
+                      direction="up"
+                      duration={2}
+                    />
+                    {stat.suffix}
+                  </p>
+                  <p className="text-xs text-gray-400">{stat.label}</p>
+                </motion.div>
+              </SpotlightCard>
+            </StarBorder>
           ))}
         </div>
       </div>

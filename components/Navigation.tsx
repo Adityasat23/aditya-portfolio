@@ -1,47 +1,60 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sun, Moon, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import LanguageToggle from './LanguageToggle';
+
+const myWorkSubmenu = [
+  { name: 'Video Editing', href: '/my-work?category=video-editing' },
+  { name: 'VFX & 3D', href: '/my-work?category=vfx-3d' },
+  { name: 'Photography', href: '/my-work?category=photography' },
+  { name: 'IT Projects', href: '/my-work?category=it-projects' },
+  { name: 'Graphic Design', href: '/my-work?category=graphic-design' },
+];
 
 const navItems = [
-  { name: 'About', nameId: 'Tentang', href: '#about', type: 'scroll' },
-  { name: 'Experience', nameId: 'Pengalaman', href: '#experience', type: 'scroll' },
-  { name: 'Projects', nameId: 'Proyek', href: '#projects', type: 'scroll' },
-  { name: 'My Work', nameId: 'Karya Saya', href: '/my-work', type: 'link' },
-  { name: 'Skills', nameId: 'Keahlian', href: '#skills', type: 'scroll' },
-  { name: 'Contact', nameId: 'Kontak', href: '#contact', type: 'scroll' },
+  { name: 'About', href: '#about', type: 'scroll' },
+  { name: 'Experience', href: '#experience', type: 'scroll' },
+  { name: 'Projects', href: '#projects', type: 'scroll' },
+  { name: 'My Work', href: '/my-work', type: 'dropdown', submenu: myWorkSubmenu },
+  { name: 'Skills', href: '#skills', type: 'scroll' },
+  { name: 'Contact', href: '#contact', type: 'scroll' },
 ];
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [language, setLanguage] = useState<'en' | 'id'>('en');
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      if (isMobileMenuOpen) setIsMobileMenuOpen(false);
     };
-    
-    const handleScrollClose = () => {
-      if (isMobileMenuOpen) {
-        setIsMobileMenuOpen(false);
-      }
-    };
-    
+
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('scroll', handleScrollClose);
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('scroll', handleScrollClose);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+      document.documentElement.classList.toggle('light', savedTheme === 'light');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.classList.toggle('light', newTheme === 'light');
+  };
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (!href.startsWith('#')) return; // Skip for external links
+    if (!href.startsWith('#')) return;
     
     e.preventDefault();
     setIsMobileMenuOpen(false);
@@ -53,14 +66,8 @@ export default function Navigation() {
       const navHeight = 64;
       const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
       
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
-      });
-      
-      if (window.history.pushState) {
-        window.history.pushState(null, '', href);
-      }
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+      window.history.pushState(null, '', href);
     }
   };
 
@@ -89,30 +96,75 @@ export default function Navigation() {
           {/* Desktop Menu */}
           <div className="hidden md:flex md:items-center md:gap-6">
             {navItems.map((item) => (
-              item.type === 'scroll' ? (
+              item.type === 'dropdown' ? (
+                <div
+                  key={item.name}
+                  className="relative"
+                  onMouseEnter={() => setOpenDropdown(item.name)}
+                  onMouseLeave={() => setOpenDropdown(null)}
+                >
+                  <button className="flex items-center gap-1 text-gray-300 hover:text-white transition-colors text-sm font-medium">
+                    {item.name}
+                    <ChevronDown size={16} />
+                  </button>
+                  
+                  <AnimatePresence>
+                    {openDropdown === item.name && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="absolute top-full left-0 mt-2 w-48 glass-card-elevated rounded-xl overflow-hidden"
+                      >
+                        {item.submenu?.map((subItem) => (
+                          <Link
+                            key={subItem.name}
+                            href={subItem.href}
+                            className="block px-4 py-3 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+                            onClick={() => setOpenDropdown(null)}
+                          >
+                            {subItem.name}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : item.type === 'scroll' ? (
                 <a
                   key={item.name}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="text-gray-300 hover:text-white transition-colors duration-200 cursor-pointer text-sm font-medium"
+                  className="text-gray-300 hover:text-white transition-colors text-sm font-medium"
                 >
-                  {language === 'en' ? item.name : item.nameId}
+                  {item.name}
                 </a>
               ) : (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-gray-300 hover:text-white transition-colors duration-200 cursor-pointer text-sm font-medium"
+                  className="text-gray-300 hover:text-white transition-colors text-sm font-medium"
                 >
-                  {language === 'en' ? item.name : item.nameId}
+                  {item.name}
                 </Link>
               )
             ))}
           </div>
 
-          {/* Language Toggle & CTA */}
+          {/* Theme Toggle & CTA */}
           <div className="hidden md:flex items-center gap-4">
-            <LanguageToggle language={language} onToggle={setLanguage} />
+            <motion.button
+              onClick={toggleTheme}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="p-2 rounded-full glass-card hover:glass-card-elevated transition-all"
+            >
+              {theme === 'dark' ? (
+                <Sun size={20} className="text-yellow-400" />
+              ) : (
+                <Moon size={20} className="text-blue-400" />
+              )}
+            </motion.button>
             
             <motion.a
               href="#contact"
@@ -121,7 +173,7 @@ export default function Navigation() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {language === 'en' ? "Let's Collaborate" : "Mari Berkolaborasi"}
+              Let&apos;s Collaborate
             </motion.a>
           </div>
 
@@ -129,7 +181,6 @@ export default function Navigation() {
           <button
             className="md:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -152,9 +203,9 @@ export default function Navigation() {
                     key={item.name}
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
-                    className="block py-3 px-4 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all cursor-pointer"
+                    className="block py-3 px-4 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all"
                   >
-                    {language === 'en' ? item.name : item.nameId}
+                    {item.name}
                   </a>
                 ) : (
                   <Link
@@ -163,13 +214,23 @@ export default function Navigation() {
                     className="block py-3 px-4 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    {language === 'en' ? item.name : item.nameId}
+                    {item.name}
                   </Link>
                 )
               ))}
               
-              <div className="pt-4 flex justify-center">
-                <LanguageToggle language={language} onToggle={setLanguage} />
+              <div className="pt-4 flex justify-center gap-4">
+                <motion.button
+                  onClick={toggleTheme}
+                  whileTap={{ scale: 0.95 }}
+                  className="p-3 rounded-full glass-card"
+                >
+                  {theme === 'dark' ? (
+                    <Sun size={20} className="text-yellow-400" />
+                  ) : (
+                    <Moon size={20} className="text-blue-400" />
+                  )}
+                </motion.button>
               </div>
               
               <a
@@ -177,7 +238,7 @@ export default function Navigation() {
                 onClick={(e) => handleNavClick(e, '#contact')}
                 className="block py-3 text-center bg-gradient-to-r from-blue-500 to-purple-500 rounded-full text-white font-medium mt-4"
               >
-                {language === 'en' ? "Let's Collaborate" : "Mari Berkolaborasi"}
+                Let&apos;s Collaborate
               </a>
             </div>
           </motion.div>

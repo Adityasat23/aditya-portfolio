@@ -26,12 +26,13 @@ export const personalInfo = {
   location: "Semarang, Indonesia",
   social: {
     instagram: "https://instagram.com/aditysat",
+    tiktok: "https://tiktok.com/@aditysat", // GANTI dengan TikTok URL Anda
     behance: "https://behance.net/aditysat",
     linkedin: "https://linkedin.com/in/aditysat",
   },
-  profileImage: "/images/profile.jpg",
-  showreel: "dQw4w9WgXcQ", // GANTI dengan YouTube ID real
-  resumeUrl: "/resume.pdf",
+  profileImage: "/images/profile.jpg", // Taruh foto Anda di public/images/profile.jpg
+  showreel: "dQw4w9WgXcQ", // GANTI dengan YouTube video ID showreel Anda
+  resumeUrl: "/resume.pdf", // Taruh CV Anda di public/resume.pdf
 };
 
 export const experiences = [
@@ -104,7 +105,7 @@ export const projects: Project[] = [
       "36K shares",
       "34.7K comments"
     ],
-    image: "/images/google-gemini.jpg",
+    image: "/images/projects/google-gemini.jpg", // Taruh gambar project di public/images/projects/
     videoEmbed: "dQw4w9WgXcQ", // GANTI dengan YouTube ID real
     videoPlatform: "youtube",
     tags: ["Video Editing", "Brand Compliance", "Viral Marketing", "Adobe Premiere"],
@@ -125,7 +126,7 @@ export const projects: Project[] = [
       "427% growth in profile visits",
       "5+ accounts successfully managed"
     ],
-    image: "/images/nore-inovasi.jpg",
+    image: "/images/projects/nore-inovasi.jpg",
     videoEmbed: "CzXxXxXxX", // GANTI dengan Instagram post ID
     videoPlatform: "instagram",
     tags: ["Content Strategy", "Motion Graphics", "Analytics", "Multi-platform"],
@@ -146,29 +147,11 @@ export const projects: Project[] = [
       "145K+ total likes",
       "3 new media channels launched"
     ],
-    image: "/images/bem-polines.jpg",
+    image: "/images/projects/bem-polines.jpg",
     videoEmbed: "7123456789012345678", // GANTI dengan TikTok video ID
     videoPlatform: "tiktok",
     tags: ["Brand Identity", "Content Strategy", "Multi-platform", "Leadership"],
     featured: true
-  },
-  {
-    id: 4,
-    title: "Influencer Content Portfolio",
-    client: "Various KOLs via Angkasa Management",
-    category: "Influencer Content",
-    year: "2024-Present",
-    description: "Ongoing content creation for multiple high-profile Indonesian influencers.",
-    challenge: "Balancing tight brand briefs with creator authenticity",
-    solution: "Developed flexible editing workflows, maintained content management systems",
-    results: [
-      "Worked with 80+ major brands",
-      "Reached 18M+ collective audience",
-      "Maintained long-term client relationships"
-    ],
-    image: "/images/influencer-work.jpg",
-    tags: ["Video Editing", "Content Management", "KOL Collaboration"],
-    featured: false
   },
 ];
 
