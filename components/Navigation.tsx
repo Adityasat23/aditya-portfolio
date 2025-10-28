@@ -33,40 +33,39 @@ export default function Navigation() {
       setIsScrolled(window.scrollY > 50);
       if (isMobileMenuOpen) setIsMobileMenuOpen(false);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isMobileMenuOpen]);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.toggle('light', savedTheme === 'light');
-    }
+    try {
+      const saved = (localStorage.getItem('theme') as 'dark' | 'light' | null) || null;
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = saved ?? (prefersDark ? 'dark' : 'light');
+      setTheme(initial);
+      document.documentElement.classList.toggle('dark', initial === 'dark');
+    } catch {}
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-    document.documentElement.classList.toggle('light', newTheme === 'light');
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
+    document.documentElement.classList.toggle('dark', next === 'dark');
   };
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (!href.startsWith('#')) return;
-    
     e.preventDefault();
     setIsMobileMenuOpen(false);
-    
-    const targetId = href.replace('#', '');
-    const targetElement = document.getElementById(targetId);
-    
-    if (targetElement) {
-      const navHeight = 64;
-      const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
-      
-      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    const targetId = href.slice(1);
+    const el = document.getElementById(targetId);
+    if (el) {
+      const navH = 64;
+      const y = el.getBoundingClientRect().top + window.pageYOffset - navH;
+      window.scrollTo({ top: y, behavior: 'smooth' });
       window.history.pushState(null, '', href);
     }
   };
@@ -76,26 +75,21 @@ export default function Navigation() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-black/80 backdrop-blur-xl shadow-lg border-b border-white/10' 
-          : 'bg-transparent'
+        isScrolled ? 'bg-black/80 backdrop-blur-xl shadow-lg border-b border-white/10' : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/">
-            <motion.div
-              className="text-xl font-bold gradient-text cursor-pointer"
-              whileHover={{ scale: 1.05 }}
-            >
+            <motion.div className="text-xl font-bold gradient-text cursor-pointer" whileHover={{ scale: 1.05 }}>
               AS
             </motion.div>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex md:items-center md:gap-6">
-            {navItems.map((item) => (
+            {navItems.map((item) =>
               item.type === 'dropdown' ? (
                 <div
                   key={item.name}
@@ -107,7 +101,6 @@ export default function Navigation() {
                     {item.name}
                     <ChevronDown size={16} />
                   </button>
-                  
                   <AnimatePresence>
                     {openDropdown === item.name && (
                       <motion.div
@@ -116,14 +109,14 @@ export default function Navigation() {
                         exit={{ opacity: 0, y: -10 }}
                         className="absolute top-full left-0 mt-2 w-48 glass-card-elevated rounded-xl overflow-hidden"
                       >
-                        {item.submenu?.map((subItem) => (
+                        {item.submenu?.map((sub) => (
                           <Link
-                            key={subItem.name}
-                            href={subItem.href}
+                            key={sub.name}
+                            href={sub.href}
                             className="block px-4 py-3 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
                             onClick={() => setOpenDropdown(null)}
                           >
-                            {subItem.name}
+                            {sub.name}
                           </Link>
                         ))}
                       </motion.div>
@@ -148,7 +141,7 @@ export default function Navigation() {
                   {item.name}
                 </Link>
               )
-            ))}
+            )}
           </div>
 
           {/* Theme Toggle & CTA */}
@@ -158,14 +151,10 @@ export default function Navigation() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="p-2 rounded-full glass-card hover:glass-card-elevated transition-all"
+              aria-label="Toggle theme"
             >
-              {theme === 'dark' ? (
-                <Sun size={20} className="text-yellow-400" />
-              ) : (
-                <Moon size={20} className="text-blue-400" />
-              )}
+              {theme === 'dark' ? <Sun size={20} className="text-yellow-400" /> : <Moon size={20} className="text-blue-400" />}
             </motion.button>
-            
             <motion.a
               href="#contact"
               onClick={(e) => handleNavClick(e, '#contact')}
@@ -181,6 +170,7 @@ export default function Navigation() {
           <button
             className="md:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Open menu"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -197,7 +187,7 @@ export default function Navigation() {
             className="md:hidden bg-black/95 backdrop-blur-xl border-b border-white/10"
           >
             <div className="px-4 pt-2 pb-4 space-y-2">
-              {navItems.map((item) => (
+              {navItems.map((item) =>
                 item.type === 'scroll' ? (
                   <a
                     key={item.name}
@@ -217,22 +207,12 @@ export default function Navigation() {
                     {item.name}
                   </Link>
                 )
-              ))}
-              
+              )}
               <div className="pt-4 flex justify-center gap-4">
-                <motion.button
-                  onClick={toggleTheme}
-                  whileTap={{ scale: 0.95 }}
-                  className="p-3 rounded-full glass-card"
-                >
-                  {theme === 'dark' ? (
-                    <Sun size={20} className="text-yellow-400" />
-                  ) : (
-                    <Moon size={20} className="text-blue-400" />
-                  )}
+                <motion.button onClick={toggleTheme} whileTap={{ scale: 0.95 }} className="p-3 rounded-full glass-card" aria-label="Toggle theme">
+                  {theme === 'dark' ? <Sun size={20} className="text-yellow-400" /> : <Moon size={20} className="text-blue-400" />}
                 </motion.button>
               </div>
-              
               <a
                 href="#contact"
                 onClick={(e) => handleNavClick(e, '#contact')}
